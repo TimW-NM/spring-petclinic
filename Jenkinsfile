@@ -14,6 +14,18 @@ pipeline {
     post {
         success {
             junit 'target/surefire-reports/**/*.xml'
+        
+            def uploadSpec = """{
+              "files": [
+                {
+                  "pattern": "/target/spring-petclinic-*.BUILD-SNAPSHOT.jar",
+                  "target": "example-repo-local"
+                }
+             ]
+            }"""
+            server.upload(uploadSpec)
         }
+        
     }
+    
 }
